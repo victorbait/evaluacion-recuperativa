@@ -15,18 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getContacts = exports.addContact = void 0;
 const ContactsModel_1 = __importDefault(require("../models/ContactsModel"));
 const addContact = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const { email, name, comment } = req.body;
-        const ip = req.ip || '0.0.0.0';
-        const date = new Date().toISOString();
+        const ip = ((_a = req.headers['x-forwarded-for']) === null || _a === void 0 ? void 0 : _a.toString()) || req.socket.remoteAddress || '0.0.0.0';
+        const created_at = new Date().toISOString(); // Corrección aquí: renombrado de "date" a "created_at"
         if (!email || !name || !comment) {
             res.status(400).send('Todos los campos son obligatorios.');
             return;
         }
-        yield ContactsModel_1.default.add({ email, name, comment, ip, date });
+        yield ContactsModel_1.default.add({ email, name, comment, ip, created_at });
         res.send('Contacto guardado exitosamente.');
     }
     catch (error) {
+        console.error('Error en addContact:', error);
         res.status(500).json({ error: 'Error al agregar contacto' });
     }
 });
@@ -38,6 +40,7 @@ const getContacts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json({ contacts });
     }
     catch (error) {
+        console.error('Error en getContacts:', error);
         res.status(500).json({ error: 'Error al obtener contactos' });
     }
 });

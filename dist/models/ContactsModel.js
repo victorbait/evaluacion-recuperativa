@@ -21,8 +21,8 @@ class ContactsModel {
                 filename: './database.sqlite',
                 driver: sqlite3_1.default.Database
             });
-            yield db.run('CREATE TABLE IF NOT EXISTS contacts (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, name TEXT, comment TEXT, ip TEXT, date TEXT)');
-            yield db.run('INSERT INTO contacts (email, name, comment, ip, date) VALUES (?, ?, ?, ?, ?)', contact.email, contact.name, contact.comment, contact.ip, contact.date);
+            yield db.run('CREATE TABLE IF NOT EXISTS contacts (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, name TEXT, comment TEXT, ip TEXT, created_at TEXT)');
+            yield db.run('INSERT INTO contacts (email, name, comment, ip, created_at) VALUES (?, ?, ?, ?, ?)', contact.email, contact.name, contact.comment, contact.ip, contact.created_at);
             yield db.close();
         });
     }

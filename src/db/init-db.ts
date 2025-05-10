@@ -17,7 +17,7 @@ async function createDatabase() {
       email TEXT NOT NULL,
       comment TEXT NOT NULL,
       ip TEXT NOT NULL,
-      created_at TEXT NOT NULL
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
 
