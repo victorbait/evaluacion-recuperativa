@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path'; 
-import contactRoutes from './routes/contact'; 
-
+import contactRoutes from './routes/contact';
+import adminRoutes from './routes/admin';
 
 const app = express(); 
 app.use(express.urlencoded({ extended: true }));
@@ -18,9 +18,8 @@ app.get('/payment', (req, res) => {
   res.render('payment');
 });
 
-
 app.use('/', contactRoutes);
-
+app.use('/admin', adminRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

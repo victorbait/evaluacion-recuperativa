@@ -12,14 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getContacts = exports.addContact = void 0;
+exports.indexContacts = exports.getContacts = exports.addContact = void 0;
 const ContactsModel_1 = __importDefault(require("../models/ContactsModel"));
 const addContact = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         const { email, name, comment } = req.body;
         const ip = ((_a = req.headers['x-forwarded-for']) === null || _a === void 0 ? void 0 : _a.toString()) || req.socket.remoteAddress || '0.0.0.0';
-        const created_at = new Date().toISOString(); // Corrección aquí: renombrado de "date" a "created_at"
+        const created_at = new Date().toISOString();
         if (!email || !name || !comment) {
             res.status(400).send('Todos los campos son obligatorios.');
             return;
@@ -33,7 +33,6 @@ const addContact = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.addContact = addContact;
-// Aquí agregamos la función `getContacts` y nos aseguramos de exportarla
 const getContacts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const contacts = yield ContactsModel_1.default.getAll();
@@ -45,3 +44,14 @@ const getContacts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getContacts = getContacts;
+const indexContacts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const contacts = yield ContactsModel_1.default.getAll();
+        res.render('admin/contacts', { contacts });
+    }
+    catch (error) {
+        console.error('Error en indexContacts:', error);
+        res.status(500).json({ error: 'Error al obtener contactos' });
+    }
+});
+exports.indexContacts = indexContacts;
