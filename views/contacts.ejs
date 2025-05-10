@@ -1,0 +1,21 @@
+<table>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Comentario</th>
+      <th>IP</th>
+      <th>Fecha</th>
+    </tr>
+    <% contacts.forEach(contact => { %>
+      <tr>
+        <td><%= contact.id %></td>
+        <td><%= contact.name %></td>
+        <td><%= contact.email %></td>
+        <td><%= contact.comment %></td>
+        <td><%= contact.ip %></td>
+        <td><%= contact.date %></td>
+      </tr>
+    <% }) %>
+  </table>
+  

@@ -1,0 +1,124 @@
+/* 🌄 Fondo con imagen y overlay difuminado */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #f0f2f5;
+  }
+  
+  /* 🔳 Capa del fondo con imagen */
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url('/img/payment-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px) brightness(0.7);
+    z-index: -2;
+  }
+  
+  /* 🔲 Capa overlay blanca translúcida */
+  body::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    z-index: -1;
+  }
+  
+  /* 🧾 Contenedor principal */
+  .container {
+    max-width: 500px;
+    background-color: rgba(255, 255, 255, 0.92);
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+  }
+  
+  /* 🖋️ Título principal */
+  h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* 🧩 Etiquetas */
+  .form-label {
+    font-weight: 500;
+    color: #34495e;
+    margin-bottom: 6px;
+  }
+  
+  /* 🔘 Campos del formulario */
+  .form-control {
+    border-radius: 12px;
+    border: 1px solid #dcdde1;
+    padding: 14px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .form-control:focus {
+    border-color: #2980b9;
+    box-shadow: 0 0 0 4px rgba(41, 128, 185, 0.15);
+    outline: none;
+  }
+  
+  /* 💳 Select */
+  select.form-control {
+    background-color: #f9f9f9;
+    color: #2c3e50;
+  }
+  
+  /* 🎯 Botón de pago */
+  .btn-primary {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border: none;
+    padding: 16px;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 12px;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: linear-gradient(135deg, #2980b9, #1c658c);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* 📱 Responsividad */
+  @media (max-width: 576px) {
+    .container {
+      margin: 20px;
+      padding: 25px 20px;
+    }
+  
+    h2 {
+      font-size: 22px;
+    }
+  
+    .form-control {
+      font-size: 15px;
+    }
+  
+    .btn-primary {
+      font-size: 16px;
+      padding: 14px;
+    }
+  }
+  
