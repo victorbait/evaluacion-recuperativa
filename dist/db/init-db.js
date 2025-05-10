@@ -15,14 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const sqlite_1 = require("sqlite");
 const path_1 = __importDefault(require("path"));
-// Creamos la conexión a la base de datos
 function createDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield (0, sqlite_1.open)({
             filename: path_1.default.join(__dirname, '../database.sqlite'),
             driver: sqlite3_1.default.Database
         });
-        // Creamos la tabla si no existe
         yield db.exec(`
     CREATE TABLE IF NOT EXISTS contacts (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -37,7 +35,6 @@ function createDatabase() {
         yield db.close();
     });
 }
-// Ejecutar el script
 createDatabase().catch((err) => {
     console.error('❌ Error creando la base de datos:', err);
 });

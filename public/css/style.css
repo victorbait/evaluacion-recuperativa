@@ -1,5 +1,5 @@
-/* 🌄 Fondo con imagen y overlay difuminado */
-body {
+body 
+{
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
@@ -11,7 +11,7 @@ body {
     background-color: #f0f2f5;
   }
   
-  /* 🔳 Capa del fondo con imagen */
+
   body::before {
     content: "";
     position: absolute;
@@ -25,7 +25,7 @@ body {
     z-index: -2;
   }
   
-  /* 🔲 Capa overlay blanca translúcida */
+
   body::after {
     content: "";
     position: absolute;
@@ -35,7 +35,7 @@ body {
     z-index: -1;
   }
   
-  /* 🧾 Contenedor principal */
+
   .container {
     max-width: 500px;
     background-color: rgba(255, 255, 255, 0.92);
@@ -45,7 +45,7 @@ body {
     backdrop-filter: blur(4px);
   }
   
-  /* 🖋️ Título principal */
+
   h2 {
     font-size: 26px;
     font-weight: 600;
@@ -54,14 +54,14 @@ body {
     text-align: center;
   }
   
-  /* 🧩 Etiquetas */
+
   .form-label {
     font-weight: 500;
     color: #34495e;
     margin-bottom: 6px;
   }
   
-  /* 🔘 Campos del formulario */
+
   .form-control {
     border-radius: 12px;
     border: 1px solid #dcdde1;
@@ -76,13 +76,13 @@ body {
     outline: none;
   }
   
-  /* 💳 Select */
+
   select.form-control {
     background-color: #f9f9f9;
     color: #2c3e50;
   }
   
-  /* 🎯 Botón de pago */
+
   .btn-primary {
     margin-top: 20px;
     background: linear-gradient(135deg, #3498db, #2980b9);
@@ -101,7 +101,7 @@ body {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   }
   
-  /* 📱 Responsividad */
+ 
   @media (max-width: 576px) {
     .container {
       margin: 20px;
@@ -121,4 +121,49 @@ body {
       padding: 14px;
     }
   }
-  
+
+.shadow {
+    background: rgba( 211, 211, 211, 0.45 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 9px );
+    -webkit-backdrop-filter: blur( 9px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.box {
+    width: 100%;
+    max-width: 600px;
+    padding: 23px;
+    margin: 16px;
+}
+
+.input-row {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.input-row div {
+    width: 100%;
+}
+
+
+.field {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.field label {
+    font-weight: bold;
+}
+
+.form {
+    max-width: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
