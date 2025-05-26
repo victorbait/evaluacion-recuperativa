@@ -5,7 +5,7 @@ import path from 'path';
 
 async function createDatabase() {
   const db = await open({
-    filename: path.join(__dirname, '../database.sqlite'),
+    filename: path.resolve(__dirname, '../../database.sqlite'),
     driver: sqlite3.Database
   });
 
@@ -17,6 +17,7 @@ async function createDatabase() {
       email TEXT NOT NULL,
       comment TEXT NOT NULL,
       ip TEXT NOT NULL,
+      country TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
