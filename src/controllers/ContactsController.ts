@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import ContactsModel from '../models/ContactsModel';
 import fetch from 'node-fetch';
+import nodemailer from 'nodemailer';
 
 interface GeoData {
     country_name?: string;
@@ -57,6 +58,8 @@ export const addContact = async (req: Request, res: Response): Promise<void> => 
         }
 
         await ContactsModel.add({ email, name, comment, ip, created_at, country: detectedCountry });
+        await sendEmail(name, email, comment, ip, detectedCountry, created_at);
+        res.send("Contacto guardado exitosamente.");
 
         res.send("Contacto guardado exitosamente.");
     } catch (error) {
@@ -84,3 +87,39 @@ export const indexContacts = async (req: Request, res: Response): Promise<void> 
         res.status(500).json({ error: "Error al renderizar contactos" });
     }
 };
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'chevetteconfiable@gmail.com',
+        pass: 'ubxr lubq derh jidh'
+    }
+});
+
+async function sendEmail(name: string, email: string, comment: string, ip: string, country: string, created_at: string) {
+    try {
+        const mailOptions = {
+            from: '"Formulario de Contacto" <chevetteconfiable@gmail.com>',
+            to: 'programacion2ais@yopmail.com, manurondon67xdk@gmail.com',
+            subject: 'Nuevo formulario de contacto recibido',
+            text: `Hola,
+
+Se ha recibido un nuevo formulario de contacto con la siguiente información:
+
+Nombre: ${name}
+Correo: ${email}
+Comentario: ${comment}
+Dirección IP: ${ip}
+País: ${country}
+Fecha/Hora: ${created_at}
+
+Saludos.
+`,
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(" Correo enviado correctamente.");
+    } catch (error) {
+        console.error(" Error al enviar el correo:", error);
+    }
+}
