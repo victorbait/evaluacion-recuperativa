@@ -6,16 +6,40 @@ interface GeoData {
     country_name?: string;
 }
 
+const RECAPTCHA_SECRET_KEY = '6LcKl0orAAAAAEqF1l4wh4BkU9jPJ_Xluob6ga9D';
+
 export const addContact = async (req: Request, res: Response): Promise<void> => {
     try {
         console.log("Datos recibidos en req.body:", req.body);
 
-        const { email, name, comment, country } = req.body;
+        const { email, name, comment, country, 'g-recaptcha-response': captcha } = req.body;
         const ip = req.headers['x-forwarded-for']?.toString() || req.socket.remoteAddress || '0.0.0.0';
         const created_at = new Date().toISOString();
 
         if (!email || !name || !comment) {
             res.status(400).send("Todos los campos son obligatorios.");
+            return;
+        }
+
+        if (!captcha) {
+            res.status(400).send("Por favor completa el reCAPTCHA.");
+            return;
+        }
+
+        try {
+            const captchaVerifyURL = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${captcha}`;
+            const captchaResponse = await fetch(captchaVerifyURL, { method: 'POST' });
+            const captchaData = await captchaResponse.json() as { success: boolean; score?: number };
+
+            console.log("Respuesta de reCAPTCHA:", captchaData);
+
+            if (!captchaData.success || (captchaData.score !== undefined && captchaData.score < 0.5)) {
+                res.status(400).send("La verificación de reCAPTCHA ha fallado o el puntaje es demasiado bajo.");
+                return;
+            }
+        } catch (captchaError) {
+            console.error("Error validando reCAPTCHA:", captchaError);
+            res.status(500).send("Error al verificar el captcha.");
             return;
         }
 

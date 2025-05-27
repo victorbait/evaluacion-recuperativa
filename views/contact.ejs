@@ -19,31 +19,58 @@
     window.onload = setCountry;
   </script>
 </head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MY5WQH8WHN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MY5WQH8WHN');
+</script>
+
 <body>
+  <div class="container shadow box">
+    <h2>Formulario de Contacto</h2>
+    <form class="form" action="/contact/add" method="POST" onsubmit="return validateCaptcha()">
+      <div class="field">
+        <label class="form-label" for="email">Correo Electrónico:</label>
+        <input class="form-control" type="email" id="email" name="email" required>
+      </div>
 
-<div class="container shadow box">
-  <h2>Formulario de Contacto</h2>
-  <form class="form" action="/contact/add" method="POST">
-    <div class="field">
-      <label class="form-label" for="email">Correo Electrónico:</label>
-      <input class="form-control" type="email" id="email" name="email" required>
-    </div>
+      <div class="field">
+        <label class="form-label" for="name">Nombres:</label>
+        <input class="form-control" type="text" id="name" name="name" required>
+      </div>
 
-    <div class="field">
-      <label class="form-label" for="name">Nombres:</label>
-      <input class="form-control" type="text" id="name" name="name" required>
-    </div>
+      <div class="field">
+        <label class="form-label" for="comment">Comentario:</label>
+        <textarea class="form-control" id="comment" name="comment" rows="4" required></textarea>
+      </div>
 
-    <div class="field">
-      <label class="form-label" for="comment">Comentario:</label>
-      <textarea class="form-control" id="comment" name="comment" rows="4" required></textarea>
-    </div>
+      <input type="hidden" id="country" name="country">
 
-    <input type="hidden" id="country" name="country">
+      <!-- reCAPTCHA -->
+      <div class="g-recaptcha" data-sitekey="6LcKl0orAAAAAKEs-FyOWTkDlwJE3Eskwe5VkLrW" data-callback="enableSubmit"></div>
 
-    <button class="btn-primary" type="submit">Enviar</button>
-  </form>
-</div>
+      <button id="submit-btn" class="btn-primary" type="submit" disabled>Enviar</button>
+    </form>
+  </div>
 
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script>
+    function enableSubmit() {
+        document.getElementById("submit-btn").disabled = false;
+    }
+
+    function validateCaptcha() {
+        var captchaResponse = grecaptcha.getResponse();
+        if (captchaResponse.length === 0) {
+            alert("Por favor completa el captcha antes de enviar el formulario.");
+            return false;
+        }
+        return true;
+    }
+  </script>
 </body>
 </html>
