@@ -2,12 +2,21 @@ import { Request, Response } from 'express';
 import ContactsModel from '../models/ContactsModel';
 import fetch from 'node-fetch';
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 interface GeoData {
     country_name?: string;
 }
 
-const RECAPTCHA_SECRET_KEY = '6LcKl0orAAAAAEqF1l4wh4BkU9jPJ_Xluob6ga9D';
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || '';
+const EMAIL_USER = process.env.EMAIL_USER || '';
+const EMAIL_PASS = process.env.EMAIL_PASS || '';
+
+if (!RECAPTCHA_SECRET_KEY || !EMAIL_USER || !EMAIL_PASS) {
+    throw new Error('faltan variables d entorno: RECAPTCHA_SECRET_KEY, EMAIL_USER o EMAIL_PASS');
+}
 
 export const addContact = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -23,7 +32,7 @@ export const addContact = async (req: Request, res: Response): Promise<void> => 
         }
 
         if (!captcha) {
-            res.status(400).send("Por favor completa el reCAPTCHA.");
+            res.status(400).send("Por favor completa el recAPTCHA.");
             return;
         }
 
@@ -35,7 +44,7 @@ export const addContact = async (req: Request, res: Response): Promise<void> => 
             console.log("Respuesta de reCAPTCHA:", captchaData);
 
             if (!captchaData.success || (captchaData.score !== undefined && captchaData.score < 0.5)) {
-                res.status(400).send("La verificación de reCAPTCHA ha fallado o el puntaje es demasiado bajo.");
+                res.status(400).send("La verificación de reCAPTCHA ha fallado.");
                 return;
             }
         } catch (captchaError) {
@@ -61,7 +70,6 @@ export const addContact = async (req: Request, res: Response): Promise<void> => 
         await sendEmail(name, email, comment, ip, detectedCountry, created_at);
         res.send("Contacto guardado exitosamente.");
 
-        res.send("Contacto guardado exitosamente.");
     } catch (error) {
         console.error("Error en addContact:", error);
         res.status(500).json({ error: "Error al agregar contacto" });
@@ -91,15 +99,15 @@ export const indexContacts = async (req: Request, res: Response): Promise<void> 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'chevetteconfiable@gmail.com',
-        pass: 'ubxr lubq derh jidh'
+        user: EMAIL_USER,
+        pass: EMAIL_PASS
     }
 });
 
 async function sendEmail(name: string, email: string, comment: string, ip: string, country: string, created_at: string) {
     try {
         const mailOptions = {
-            from: '"Formulario de Contacto" <chevetteconfiable@gmail.com>',
+            from: `"Formulario de Contacto" <${EMAIL_USER}>`,
             to: 'programacion2ais@yopmail.com, manurondon67xdk@gmail.com',
             subject: 'Nuevo formulario de contacto recibido',
             text: `Hola,
@@ -118,8 +126,8 @@ Saludos.
         };
 
         await transporter.sendMail(mailOptions);
-        console.log(" Correo enviado correctamente.");
+        console.log("Correo enviado correctamente.");
     } catch (error) {
-        console.error(" Error al enviar el correo:", error);
+        console.error("Error al enviar el correo:", error);
     }
 }
