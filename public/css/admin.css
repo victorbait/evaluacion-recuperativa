@@ -1,0 +1,118 @@
+/* General Admin Styles */
+body.admin-body {
+    background-color: #0b1c3d; /* Azul oscuro como fallback */
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-image: url('/img/admin-bg.jpg'); /* Usaremos un color sólido si no existe */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Admin Header (Navbar) */
+.admin-header {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.admin-header .logo {
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.admin-header .admin-nav a {
+    color: #a7c0ff;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.admin-header .admin-nav a:hover,
+.admin-header .admin-nav a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Main Content Area */
+.admin-main {
+    padding: 40px;
+}
+
+.admin-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.admin-card h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.admin-card .lead {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Links/List inside the card */
+.feature-list .feature-item {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    text-decoration: none;
+    display: block;
+    color: #333;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.feature-list .feature-item:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.feature-list .feature-item:hover {
+    background-color: #f7f9fc;
+    border-color: #007bff;
+}
+
+.feature-list .feature-item h4 {
+    margin: 0 0 5px 0;
+    color: #0056b3;
+}
+
+.feature-list .feature-item p {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Table Styles */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.admin-table th, .admin-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+.admin-table thead th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+.admin-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+} 

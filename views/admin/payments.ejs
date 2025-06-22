@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Pagos | Panel Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+    <header class="admin-header">
+        <a href="/admin/dashboard" class="logo">Panel Admin</a>
+        <nav class="admin-nav">
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/payments" class="active">Ver Pagos</a>
+            <a href="/admin/contacts">Ver Contactos</a>
+            <a href="/admin/logout">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <main class="admin-main">
+        <div class="admin-card">
+            <h1>Historial de Pagos</h1>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID Transacción</th>
+                        <th>Monto</th>
+                        <th>Moneda</th>
+                        <th>Email</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (payments && payments.length > 0) { %>
+                        <% payments.forEach(payment => { %>
+                            <tr>
+                                <td><%= payment.transaction_id %></td>
+                                <td><%= payment.amount %></td>
+                                <td><%= payment.currency %></td>
+                                <td><%= payment.email %></td>
+                                <td>
+                                    <% if (payment.status) { %>
+                                        <span style="color: <%= payment.status.toLowerCase() === 'approved' ? 'green' : 'red' %>; font-weight: bold;">
+                                            <%= payment.status %>
+                                        </span>
+                                    <% } else { %>
+                                        <span>N/A</span>
+                                    <% } %>
+                                </td>
+                                <td><%= new Date(payment.created_at).toLocaleString() %></td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6" style="text-align: center;">No hay pagos registrados.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>

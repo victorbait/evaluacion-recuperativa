@@ -22,17 +22,27 @@ export const addContact = async (req: Request, res: Response): Promise<void> => 
     try {
         console.log("Datos recibidos en req.body:", req.body);
 
-        const { email, name, comment, country, 'g-recaptcha-response': captcha } = req.body;
+        const { email, name, message, country, 'g-recaptcha-response': captcha } = req.body;
         const ip = req.headers['x-forwarded-for']?.toString() || req.socket.remoteAddress || '0.0.0.0';
         const created_at = new Date().toISOString();
 
-        if (!email || !name || !comment) {
-            res.status(400).send("Todos los campos son obligatorios.");
+        if (!email || !name || !message) {
+            res.render('contact', { 
+                meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+                success: false, 
+                message: "Todos los campos son obligatorios.",
+                recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
+            });
             return;
         }
 
         if (!captcha) {
-            res.status(400).send("Por favor completa el recAPTCHA.");
+            res.render('contact', { 
+                meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+                success: false, 
+                message: "Por favor completa el recAPTCHA.",
+                recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
+            });
             return;
         }
 
@@ -44,12 +54,22 @@ export const addContact = async (req: Request, res: Response): Promise<void> => 
             console.log("Respuesta de reCAPTCHA:", captchaData);
 
             if (!captchaData.success || (captchaData.score !== undefined && captchaData.score < 0.5)) {
-                res.status(400).send("La verificación de reCAPTCHA ha fallado.");
+                res.render('contact', { 
+                    meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+                    success: false, 
+                    message: "La verificación de reCAPTCHA ha fallado.",
+                    recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
+                });
                 return;
             }
         } catch (captchaError) {
             console.error("Error validando reCAPTCHA:", captchaError);
-            res.status(500).send("Error al verificar el captcha.");
+            res.render('contact', { 
+                meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+                success: false, 
+                message: "Error al verificar el captcha.",
+                recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
+            });
             return;
         }
 
@@ -66,13 +86,24 @@ export const addContact = async (req: Request, res: Response): Promise<void> => 
             }
         }
 
-        await ContactsModel.add({ email, name, comment, ip, created_at, country: detectedCountry });
-        await sendEmail(name, email, comment, ip, detectedCountry, created_at);
-        res.send("Contacto guardado exitosamente.");
+        await ContactsModel.add({ email, name, comment: message, ip, created_at, country: detectedCountry });
+        await sendEmail(name, email, message, ip, detectedCountry, created_at);
+        
+        res.render('contact', { 
+            meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+            success: true, 
+            message: "Contacto guardado exitosamente.",
+            recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
+        });
 
     } catch (error) {
         console.error("Error en addContact:", error);
-        res.status(500).json({ error: "Error al agregar contacto" });
+        res.render('contact', { 
+            meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+            success: false, 
+            message: "Error al agregar contacto",
+            recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
+        });
     }
 };
 
@@ -104,7 +135,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-async function sendEmail(name: string, email: string, comment: string, ip: string, country: string, created_at: string) {
+async function sendEmail(name: string, email: string, message: string, ip: string, country: string, created_at: string) {
     try {
         const mailOptions = {
             from: `"Formulario de Contacto" <${EMAIL_USER}>`,
@@ -116,7 +147,7 @@ Se ha recibido un nuevo formulario de contacto con la siguiente información:
 
 Nombre: ${name}
 Correo: ${email}
-Comentario: ${comment}
+Comentario: ${message}
 Dirección IP: ${ip}
 País: ${country}
 Fecha/Hora: ${created_at}

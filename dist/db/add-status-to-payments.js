@@ -12,30 +12,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sqlite3_1 = __importDefault(require("sqlite3"));
 const sqlite_1 = require("sqlite");
-const path_1 = __importDefault(require("path"));
-function createDatabase() {
+const sqlite3_1 = __importDefault(require("sqlite3"));
+function addStatusColumn() {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield (0, sqlite_1.open)({
-            filename: path_1.default.resolve(__dirname, '../../database.sqlite'),
+            filename: './database.sqlite',
             driver: sqlite3_1.default.Database
         });
-        yield db.exec(`
-    CREATE TABLE IF NOT EXISTS contacts (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      email TEXT NOT NULL,
-      comment TEXT NOT NULL,
-      ip TEXT NOT NULL,
-      country TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
-        console.log('✅ Base de datos y tabla "contacts" creadas correctamente.');
-        yield db.close();
+        try {
+            // Check if the column already exists
+            const tableInfo = yield db.all(`PRAGMA table_info(payments)`);
+            const columnExists = tableInfo.some(column => column.name === 'status');
+            if (!columnExists) {
+                yield db.exec(`
+        ALTER TABLE payments
+        ADD COLUMN status TEXT;
+      `);
+                console.log('✅ Columna "status" agregada a la tabla de pagos.');
+            }
+            else {
+                console.log('ℹ️ La columna "status" ya existe en la tabla de pagos.');
+            }
+        }
+        catch (error) {
+            console.error('❌ Error al agregar la columna "status":', error);
+        }
+        finally {
+            yield db.close();
+        }
     });
 }
-createDatabase().catch((err) => {
-    console.error('❌ Error creando la base de datos:', err);
-});
+addStatusColumn();

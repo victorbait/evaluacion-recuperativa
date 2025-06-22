@@ -2,39 +2,55 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <title>Mensajes de Contacto | Panel Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contactos Registrados</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
-<body>
-    <div class="container">
-        <h2>Lista de Contactos Registrados</h2>
-        <table class="contacts-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Comentario</th>
-                    <th>IP</th>
-                    <th>País</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% contacts.forEach(contact => { %>
+<body class="admin-body">
+
+    <header class="admin-header">
+        <a href="/admin/dashboard" class="logo">Panel Admin</a>
+        <nav class="admin-nav">
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/payments">Ver Pagos</a>
+            <a href="/admin/contacts" class="active">Ver Contactos</a>
+            <a href="/admin/logout">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <main class="admin-main">
+        <div class="admin-card">
+            <h1>Mensajes de Contacto</h1>
+            <table class="admin-table">
+                <thead>
                     <tr>
-                        <td><%= contact.id %></td>
-                        <td><%= contact.name %></td>
-                        <td><%= contact.email %></td>
-                        <td><%= contact.comment %></td>
-                        <td><%= contact.ip %></td>
-                        <td><%= contact.country %></td>
-                        <td><%= contact.created_at %></td>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Mensaje</th>
+                        <th>País</th>
+                        <th>Fecha</th>
                     </tr>
-                <% }); %>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <% if (contacts && contacts.length > 0) { %>
+                        <% contacts.forEach(contact => { %>
+                            <tr>
+                                <td><%= contact.name %></td>
+                                <td><%= contact.email %></td>
+                                <td style="white-space: pre-wrap; word-wrap: break-word;"><%= contact.comment %></td>
+                                <td><%= contact.country %></td>
+                                <td><%= new Date(contact.created_at).toLocaleString() %></td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="5" style="text-align: center;">No hay mensajes de contacto.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
 </body>
 </html>

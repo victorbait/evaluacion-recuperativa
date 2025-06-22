@@ -14,25 +14,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const sqlite_1 = require("sqlite");
+const path_1 = __importDefault(require("path"));
 class ContactsModel {
     static add(contact) {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield (0, sqlite_1.open)({
-                filename: './database.sqlite',
+                filename: path_1.default.resolve(__dirname, '../../database.sqlite'),
                 driver: sqlite3_1.default.Database
             });
-            yield db.run('CREATE TABLE IF NOT EXISTS contacts (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, name TEXT, comment TEXT, ip TEXT, created_at TEXT)');
-            yield db.run('INSERT INTO contacts (email, name, comment, ip, created_at) VALUES (?, ?, ?, ?, ?)', contact.email, contact.name, contact.comment, contact.ip, contact.created_at);
+            yield db.run(`
+      CREATE TABLE IF NOT EXISTS contacts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT NOT NULL,
+        name TEXT NOT NULL,
+        comment TEXT NOT NULL,
+        ip TEXT NOT NULL,
+        country TEXT, 
+        created_at TEXT NOT NULL
+      )
+    `);
+            yield db.run(`
+      INSERT INTO contacts (email, name, comment, ip, country, created_at) 
+      VALUES (?, ?, ?, ?, ?, ?)
+    `, contact.email, contact.name, contact.comment, contact.ip, contact.country, contact.created_at);
             yield db.close();
         });
     }
     static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield (0, sqlite_1.open)({
-                filename: './database.sqlite',
+                filename: path_1.default.resolve(__dirname, '../../database.sqlite'),
                 driver: sqlite3_1.default.Database
             });
-            const contacts = yield db.all('SELECT * FROM contacts');
+            const contacts = yield db.all("SELECT id, name, email, comment, ip, country, created_at FROM contacts");
             yield db.close();
             return contacts;
         });

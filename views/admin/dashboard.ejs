@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Panel Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+    <header class="admin-header">
+        <a href="/admin/dashboard" class="logo">Panel Admin</a>
+        <nav class="admin-nav">
+            <a href="/admin/payments">Ver Pagos</a>
+            <a href="/admin/contacts">Ver Contactos</a>
+            <a href="/admin/logout">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <main class="admin-main">
+        <div class="admin-card">
+            <h1>Bienvenido, <%= adminUsername %></h1>
+            <p class="lead">Desde aquí puedes gestionar los pagos y contactos del sitio.</p>
+            <div class="feature-list">
+                <a href="/admin/payments" class="feature-item">
+                    <h4>Ver Historial de Pagos</h4>
+                    <p>Revisa todas las transacciones realizadas.</p>
+                </a>
+                <a href="/admin/contacts" class="feature-item">
+                    <h4>Ver Lista de Contactos</h4>
+                    <p>Administra los mensajes recibidos desde el formulario de contacto.</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html> 
