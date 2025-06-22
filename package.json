@@ -8,6 +8,7 @@
     "db:create-users": "ts-node src/db/create-users-table.ts",
     "db:create-payments": "ts-node src/db/create-payments-table.ts",
     "db:seed-admin": "ts-node src/db/seed-admin.ts",
+    "db:add-google-oauth": "ts-node src/db/add-google-oauth-fields.ts",
     "build": "tsc"
   },
   "keywords": [],
@@ -22,6 +23,8 @@
     "express-session": "^1.18.1",
     "node-fetch": "^3.3.2",
     "nodemailer": "^7.0.3",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   },
@@ -31,6 +34,8 @@
     "@types/express-session": "^1.18.2",
     "@types/node": "^22.13.17",
     "@types/nodemailer": "^6.4.17",
+    "@types/passport": "^1.0.17",
+    "@types/passport-google-oauth20": "^2.0.16",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   }

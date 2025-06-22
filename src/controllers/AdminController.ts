@@ -3,13 +3,13 @@ import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import bcrypt from 'bcrypt';
 
-// Credenciales del admin (en producción deberían estar en variables de entorno)
 const ADMIN_EMAIL = 'admin@peluqueria.com';
 const ADMIN_PASSWORD = 'admin123';
 
 export const renderAdminLogin = (req: Request, res: Response) => {
   const error = req.query.error as string;
-  res.render('admin/login', { error });
+  const googleClientId = process.env.GOOGLE_CLIENT_ID;
+  res.render('admin/login', { error, googleClientId });
 };
 
 export const handleAdminLogin = async (req: Request, res: Response) => {
@@ -29,7 +29,6 @@ export const handleAdminLogin = async (req: Request, res: Response) => {
 };
 
 export const renderAdminDashboard = (req: Request, res: Response) => {
-  // Verificar si está autenticado
   if (!(req.session as any)?.isAdmin) {
     return res.redirect('/admin/login');
   }
@@ -54,18 +53,35 @@ export const renderAdminPayments = async (req: Request, res: Response) => {
 export const handleAdminLogout = (req: Request, res: Response) => {
   req.session.destroy((err: any) => {
     if (err) {
-      // manejar error, por ejemplo, loguearlo
       return res.redirect('/admin/dashboard');
     }
     res.redirect('/admin/login');
   });
 };
 
-// Middleware para proteger rutas de admin
 export const requireAdminAuth = (req: Request, res: Response, next: NextFunction) => {
   if ((req.session as any)?.isAdmin) {
+    if (req.session.cookie && req.session.cookie.expires) {
+      const now = new Date();
+      const expires = new Date(req.session.cookie.expires);
+      
+      if (now > expires) {
+        req.session.destroy(() => {
+          res.redirect('/admin/login?error=Sesión expirada. Por favor, inicia sesión nuevamente.');
+        });
+        return;
+      }
+    }
+    
     next();
   } else {
     res.redirect('/admin/login');
   }
+};
+
+export const checkSessionActivity = (req: Request, res: Response, next: NextFunction) => {
+  if ((req.session as any)?.isAdmin) {
+    (req.session as any).lastActivity = Date.now();
+  }
+  next();
 }; 

@@ -6,12 +6,12 @@ import {
   renderAdminDashboard,
   renderAdminPayments,
   handleAdminLogout,
-  requireAdminAuth 
+  requireAdminAuth,
+  checkSessionActivity 
 } from '../controllers/AdminController';
 
 const router = express.Router();
 
-// Redirección para la raíz de /admin
 router.get('/', (req, res) => {
   if ((req.session as any)?.isAdmin) {
     res.redirect('/admin/dashboard');
@@ -20,14 +20,12 @@ router.get('/', (req, res) => {
   }
 });
 
-// Rutas de autenticación
 router.get('/login', renderAdminLogin);
 router.post('/login', handleAdminLogin);
 router.get('/logout', handleAdminLogout);
 
-// Rutas protegidas
-router.get('/dashboard', requireAdminAuth, renderAdminDashboard);
-router.get('/contacts', requireAdminAuth, indexContacts); // Ruta de contactos ahora protegida
-router.get('/payments', requireAdminAuth, renderAdminPayments);
+router.get('/dashboard', checkSessionActivity, requireAdminAuth, renderAdminDashboard);
+router.get('/contacts', checkSessionActivity, requireAdminAuth, indexContacts);
+router.get('/payments', checkSessionActivity, requireAdminAuth, renderAdminPayments);
 
-export default router;
+export default router; 
