@@ -12,16 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.requireAdminAuth = exports.handleAdminLogout = exports.renderAdminPayments = exports.renderAdminDashboard = exports.handleAdminLogin = exports.renderAdminLogin = void 0;
+exports.checkSessionActivity = exports.requireAdminAuth = exports.handleAdminLogout = exports.renderAdminPayments = exports.renderAdminDashboard = exports.handleAdminLogin = exports.renderAdminLogin = void 0;
 const sqlite_1 = require("sqlite");
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
-// Credenciales del admin (en producción deberían estar en variables de entorno)
+const dayjs_1 = __importDefault(require("dayjs"));
 const ADMIN_EMAIL = 'admin@peluqueria.com';
 const ADMIN_PASSWORD = 'admin123';
 const renderAdminLogin = (req, res) => {
     const error = req.query.error;
-    res.render('admin/login', { error });
+    const googleClientId = process.env.GOOGLE_CLIENT_ID;
+    res.render('admin/login', {
+        error: error ? req.__(error) : null,
+        googleClientId
+    });
 };
 exports.renderAdminLogin = renderAdminLogin;
 const handleAdminLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -35,13 +39,12 @@ const handleAdminLogin = (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.redirect('/admin/dashboard');
     }
     else {
-        res.redirect('/admin/login?error=Credenciales inválidas');
+        res.redirect('/admin/login?error=admin_login.invalid_credentials');
     }
 });
 exports.handleAdminLogin = handleAdminLogin;
 const renderAdminDashboard = (req, res) => {
     var _a;
-    // Verificar si está autenticado
     if (!((_a = req.session) === null || _a === void 0 ? void 0 : _a.isAdmin)) {
         return res.redirect('/admin/login');
     }
@@ -55,28 +58,38 @@ const renderAdminPayments = (req, res) => __awaiter(void 0, void 0, void 0, func
         const db = yield (0, sqlite_1.open)({ filename: './database.sqlite', driver: sqlite3_1.default.Database });
         const payments = yield db.all('SELECT * FROM payments ORDER BY created_at DESC');
         yield db.close();
-        res.render('admin/payments', { payments });
+        // Formatear fechas según el idioma
+        const formattedPayments = payments.map(payment => (Object.assign(Object.assign({}, payment), { created_at: (0, dayjs_1.default)(payment.created_at).format(req.getLocale() === 'es' ? 'DD/MM/YYYY HH:mm' : 'MM/DD/YYYY h:mm A') })));
+        res.render('admin/payments', { payments: formattedPayments });
     }
     catch (error) {
         console.error('💥 ERROR al obtener los pagos:', error);
-        res.status(500).send("Error al cargar la página de pagos.");
+        res.status(500).send(req.__('admin_payments.error_loading'));
     }
 });
 exports.renderAdminPayments = renderAdminPayments;
 const handleAdminLogout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
-            // manejar error, por ejemplo, loguearlo
             return res.redirect('/admin/dashboard');
         }
         res.redirect('/admin/login');
     });
 };
 exports.handleAdminLogout = handleAdminLogout;
-// Middleware para proteger rutas de admin
 const requireAdminAuth = (req, res, next) => {
     var _a;
     if ((_a = req.session) === null || _a === void 0 ? void 0 : _a.isAdmin) {
+        if (req.session.cookie && req.session.cookie.expires) {
+            const now = new Date();
+            const expires = new Date(req.session.cookie.expires);
+            if (now > expires) {
+                req.session.destroy(() => {
+                    res.redirect('/admin/login?error=admin_login.session_expired');
+                });
+                return;
+            }
+        }
         next();
     }
     else {
@@ -84,3 +97,11 @@ const requireAdminAuth = (req, res, next) => {
     }
 };
 exports.requireAdminAuth = requireAdminAuth;
+const checkSessionActivity = (req, res, next) => {
+    var _a;
+    if ((_a = req.session) === null || _a === void 0 ? void 0 : _a.isAdmin) {
+        req.session.lastActivity = Date.now();
+    }
+    next();
+};
+exports.checkSessionActivity = checkSessionActivity;

@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<%= getLocale() %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Peluquería a Domicilio | Belleza en tu Hogar</title>
+  <title><%= __('home.title') %> | <%= __('home.subtitle') %></title>
   
   <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Peluquería a Domicilio | Belleza en tu Hogar">
-  <meta property="og:description" content="Expertos en estilismo a la puerta de tu hogar. Servicios profesionales de peluquería, coloración, barbería y spa capilar con comodidad total.">
+  <meta property="og:title" content="<%= __('home.title') %> | <%= __('home.subtitle') %>">
+  <meta property="og:description" content="<%= __('home.welcome_message') %>">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tu-dominio.com">
   <meta property="og:image" content="/img/peluqueria-domicilio.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:site_name" content="Belleza Móvil">
-  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="<%= __('home.title') %>">
+  <meta property="og:locale" content="<%= getLocale() === 'es' ? 'es_ES' : 'en_US' %>">
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MY5WQH8WHN"></script>
@@ -129,7 +130,7 @@ footer {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Belleza Móvil</a>
+    <a class="navbar-brand" href="#"><%= __('home.title') %></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -137,12 +138,15 @@ footer {
     
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="/#servicios">Servicios</a></li>
-        <li class="nav-item"><a class="nav-link" href="/#beneficios">Beneficios</a></li>
-        <li class="nav-item"><a class="nav-link" href="/#galeria">Galería</a></li>
-        <li class="nav-item"><a class="nav-link" href="/contact">Contacto</a></li>
-        <li class="nav-item"><a class="nav-link" href="/payment">Pagar</a></li>
-        <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#servicios"><%= __('home.services') %></a></li>
+        <li class="nav-item"><a class="nav-link" href="/#beneficios"><%= __('home.about') %></a></li>
+        <li class="nav-item"><a class="nav-link" href="/#galeria"><%= __('home.contact_us') %></a></li>
+        <li class="nav-item"><a class="nav-link" href="/contact"><%= __('navigation.contact') %></a></li>
+        <li class="nav-item"><a class="nav-link" href="/payment"><%= __('navigation.payments') %></a></li>
+        <li class="nav-item"><a class="nav-link" href="/admin"><%= __('navigation.admin') %></a></li>
+        <li class="nav-item">
+          <%- include('partials/language-selector') %>
+        </li>
       </ul>
     </div>
   </div>
@@ -151,83 +155,83 @@ footer {
 <!-- Hero -->
 <section class="hero text-center">
   <div>
-    <h1 class="display-4">Tu Belleza, Nuestra Pasión</h1>
-    <p class="lead">Expertos en estilismo a la puerta de tu hogar.</p>
-    <a href="#contacto" class="btn btn-primary btn-lg mt-3">Agenda tu cita</a>
+    <h1 class="display-4"><%= __('home.welcome_message') %></h1>
+    <p class="lead"><%= __('home.professional_service') %></p>
+    <a href="#contacto" class="btn btn-primary btn-lg mt-3"><%= __('home.book_now') %></a>
   </div>
 </section>
 
 <!-- Sobre Nosotros -->
 <section class="container text-center my-5">
-  <h2 class="section-title">Sobre Nosotros</h2>
-  <p>Somos estilistas profesionales llevando la experiencia de salón a tu casa. Rapidez, calidad y comodidad, siempre contigo.</p>
+  <h2 class="section-title"><%= __('home.about') %></h2>
+  <p><%= __('home.subtitle') %></p>
 </section>
 
 <!-- Servicios -->
 <section id="servicios" class="container my-5">
-  <h2 class="section-title">Nuestros Servicios</h2>
+  <h2 class="section-title"><%= __('home.services') %></h2>
   <div class="row text-center">
     <div class="col-md-3">
-      <h5 style="font-weight: 700">Corte de Cabello</h5>
-      <p>Modernos, clásicos, para toda la familia.</p>
+      <h5 style="font-weight: 700"><%= __('home.services') %></h5>
+      <p><%= __('home.subtitle') %></p>
     </div>
     <div class="col-md-3">
-      <h5 style="font-weight: 700">Coloración</h5>
-      <p>Tintes, mechas y balayage profesionales.</p>
+      <h5 style="font-weight: 700"><%= __('home.services') %></h5>
+      <p><%= __('home.subtitle') %></p>
     </div>
     <div class="col-md-3">
-      <h5 style="font-weight: 700">Barbería</h5>
-      <p>Barba perfilada, afeitados y tratamientos masculinos.</p>
+      <h5 style="font-weight: 700"><%= __('home.services') %></h5>
+      <p><%= __('home.subtitle') %></p>
     </div>
     <div class="col-md-3">
-      <h5 style="font-weight: 700">Spa Capilar</h5>
-      <p>Hidrataciones y terapias de reparación profunda.</p>
+      <h5 style="font-weight: 700"><%= __('home.services') %></h5>
+      <p><%= __('home.subtitle') %></p>
     </div>
   </div>
 </section>
 
 <!-- Beneficios -->
 <section id="beneficios" class="container my-5">
-  <h2 class="section-title">¿Por qué Elegirnos?</h2>
+  <h2 class="section-title"><%= __('home.about') %></h2>
   <div class="row text-center">
     <div class="col-md-4">
       <div class="benefit-icon">🚗</div>
-      <h5 style="font-weight: 700">Comodidad Total</h5>
-      <p>Nos trasladamos a tu domicilio, oficina o evento.</p>
+      <h5 style="font-weight: 700"><%= __('home.professional_service') %></h5>
+      <p><%= __('home.subtitle') %></p>
     </div>
     <div class="col-md-4">
       <div class="benefit-icon">💇‍♀️</div>
-      <h5 style="font-weight: 700">Expertos Certificados</h5>
-      <p>Personal con amplia experiencia en salones top.</p>
+      <h5 style="font-weight: 700"><%= __('home.professional_service') %></h5>
+      <p><%= __('home.subtitle') %></p>
     </div>
     <div class="col-md-4">
       <div class="benefit-icon">💰</div>
-      <h5 style="font-weight: 700">Precios Accesibles</h5>
-      <p>Calidad premium a precios competitivos.</p>
+      <h5 style="font-weight: 700"><%= __('home.professional_service') %></h5>
+      <p><%= __('home.subtitle') %></p>
     </div>
   </div>
 
 <div class="text-center mt-4">
-  <a href="/payment" class="btn btn-primary btn-lg me-2">Realizar Pago</a>
-  <a href="/contact" class="btn btn-outline-primary btn-lg">Formulario de Contacto</a>
+  <a href="/payment" class="btn btn-primary btn-lg me-2"><%= __('payment.pay') %></a>
+  <a href="/contact" class="btn btn-outline-primary btn-lg"><%= __('contact.send') %></a>
 </div>
 
 </section>
 
 
 <section id="galeria" class="container my-5">
-  <h2 class="section-title">Galería de Estilos</h2>
+  <h2 class="section-title"><%= __('home.contact_us') %></h2>
   <div class="row g-3 gallery">
-    <div class="col-md-4"><img src="img/female-1.png" alt="Estilo 1"></div>
-    <div class="col-md-4"><img src="img/female-2.png" alt="Estilo 2"></div>
-    <div class="col-md-4"><img src="img/female-3.png" alt="Estilo 3"></div>
+    <div class="col-md-4"><img src="img/female-1.png" alt="<%= __('home.title') %>"></div>
+    <div class="col-md-4"><img src="img/female-2.png" alt="<%= __('home.title') %>"></div>
+    <div class="col-md-4"><img src="img/female-3.png" alt="<%= __('home.title') %>"></div>
   </div>
 </section>
 
 <!-- Contacto -->
 <section id="contacto" class="container my-5">
-  <h2 class="section-title">Contáctanos</h2>
-  <p class="text-center">Síguenos en redes sociales o agenda tu cita directamente.</p>
+  <h2 class="section-title"><%= __('contact.title') %></h2>
+  <p class="text-center"><%= __('contact.subtitle') %></p>
   <div class="text-center mb-3">
     <a href="#" class="btn btn-primary mx-2">Instagram</a>
     <a href="#" class="btn btn-primary mx-2">Facebook</a>
@@ -237,7 +241,7 @@ footer {
 
 <!-- Footer -->
 <footer>
-  <p>© 2025 Belleza Móvil. Todos los derechos reservados.</p>
+  <p><%= __('footer.copyright') %></p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,0 +1,65 @@
+<div class="language-selector">
+  <div class="dropdown">
+    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="fas fa-globe"></i> <%= __('common.language') %>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+      <li><a class="dropdown-item" href="/change-language/es">
+        <span class="flag-icon flag-icon-es"></span> <%= __('common.spanish') %>
+      </a></li>
+      <li><a class="dropdown-item" href="/change-language/en">
+        <span class="flag-icon flag-icon-gb"></span> <%= __('common.english') %>
+      </a></li>
+    </ul>
+  </div>
+</div>
+
+<style>
+.language-selector {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.language-selector .dropdown-toggle {
+  font-size: 0.9rem;
+  padding: 0.375rem 0.75rem;
+}
+
+.language-selector .dropdown-menu {
+  background-color: #fff !important;
+  color: #333 !important;
+  border: 1px solid #ccc;
+  min-width: 160px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.language-selector .dropdown-item {
+  color: #333 !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.5rem 1rem;
+  background: none !important;
+}
+
+.language-selector .dropdown-item:hover, .language-selector .dropdown-item:focus {
+  background-color: #f8f9fa !important;
+  color: #d63384 !important;
+}
+
+.flag-icon {
+  width: 16px;
+  height: 12px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.flag-icon-es {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgdmlld0JveD0iMCAwIDY0MCA0ODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2NDAiIGhlaWdodD0iNDgwIiBmaWxsPSIjQ0YxNDFCIi8+CjxyZWN0IHk9IjE2MCIgd2lkdGg9IjY0MCIgaGVpZ2h0PSIxNjAiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeT0iMzIwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0ZGRkZGRiIvPgo8L3N2Zz4K');
+}
+
+.flag-icon-gb {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgdmlld0JveD0iMCAwIDY0MCA0ODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2NDAiIGhlaWdodD0iNDgwIiBmaWxsPSIjMDEyMTY5Ii8+CjxyZWN0IHk9IjgwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjE2MCIgd2lkdGg9IjY0MCIgaGVpZ2h0PSI4MCIgZmlsbD0iI0ZGRkZGRiIvPgo8cmVjdCB5PSIzMjAiIHdpZHRoPSI2NDAiIGhlaWdodD0iODAiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeT0iNDAwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHdpZHRoPSIxNjAiIGhlaWdodD0iNDgwIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHg9IjE2MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI0ODAiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeD0iMzIwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0iI0ZGRkZGRiIvPgo8cmVjdCB4PSI0ODAiIHdpZHRoPSIxNjAiIGhlaWdodD0iNDgwIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI0ODAiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeD0iMjgwIiB3aWR0aD0iODAiIGhlaWdodD0iNDgwIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHg9IjQ0MCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0iI0ZGRkZGRiIvPgo8L3N2Zz4K');
+}
+</style> 

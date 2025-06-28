@@ -1,0 +1,139 @@
+{
+  "common": {
+    "language": "Language",
+    "spanish": "Spanish",
+    "english": "English",
+    "select_language": "Select language"
+  },
+  "navigation": {
+    "home": "Home",
+    "contact": "Contact",
+    "payments": "Payments",
+    "admin": "Administration",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "home": {
+    "title": "Home Hair Salon",
+    "subtitle": "Professional beauty services in the comfort of your home",
+    "services": "Our Services",
+    "booking": "Book Appointment",
+    "about": "About Us",
+    "contact_us": "Contact Us",
+    "welcome_message": "Welcome to our home hair salon",
+    "professional_service": "Professional service in the comfort of your home",
+    "book_now": "Book Now",
+    "learn_more": "Learn More"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Get in touch with us",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "send": "Send Message",
+    "contact_info": "Contact Information",
+    "address": "Address",
+    "phone_number": "Phone Number",
+    "email_address": "Email Address",
+    "business_hours": "Business Hours",
+    "monday_friday": "Monday to Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "form_success": "Message sent successfully",
+    "form_error": "Error sending message"
+  },
+  "payment": {
+    "title": "Payment",
+    "amount": "Amount",
+    "currency": "Currency",
+    "payment_method": "Payment Method",
+    "card_number": "Card Number",
+    "expiry_date": "Expiry Date",
+    "cvv": "CVV",
+    "cardholder_name": "Cardholder Name",
+    "pay": "Pay",
+    "payment_success": "Payment completed successfully",
+    "payment_error": "Payment error",
+    "processing": "Processing payment...",
+    "total": "Total",
+    "service": "Service",
+    "date": "Date",
+    "time": "Time"
+  },
+  "admin": {
+    "dashboard": "Administration Panel",
+    "payments": "Payments",
+    "contacts": "Contacts",
+    "users": "Users",
+    "settings": "Settings",
+    "welcome": "Welcome",
+    "total_payments": "Total Payments",
+    "total_contacts": "Total Contacts",
+    "recent_activity": "Recent Activity",
+    "view_all": "View All"
+  },
+  "admin_login": {
+    "title": "Login - Administration",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "invalid_credentials": "Invalid credentials",
+    "session_expired": "Session expired. Please login again.",
+    "or_login_with": "Or login with"
+  },
+  "admin_payments": {
+    "title": "Payment Management",
+    "payment_id": "Payment ID",
+    "customer_email": "Customer Email",
+    "amount": "Amount",
+    "status": "Status",
+    "created_at": "Created At",
+    "actions": "Actions",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "no_payments": "No payments registered",
+    "loading_payments": "Loading payments...",
+    "error_loading": "Error loading payments page"
+  },
+  "admin_contacts": {
+    "title": "Contact Management",
+    "contact_id": "Contact ID",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "created_at": "Created At",
+    "actions": "Actions",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "no_contacts": "No contacts registered",
+    "loading_contacts": "Loading contacts...",
+    "error_loading": "Error loading contacts page"
+  },
+  "status": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "failed": "Failed"
+  },
+  "date_format": {
+    "short": "MM/DD/YYYY",
+    "long": "MM/DD/YYYY h:mm A",
+    "time": "h:mm A"
+  },
+  "errors": {
+    "page_not_found": "Page not found",
+    "server_error": "Server error",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Forbidden"
+  },
+  "footer": {
+    "copyright": "© 2024 Home Hair Salon. All rights reserved.",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service"
+  }
+} 

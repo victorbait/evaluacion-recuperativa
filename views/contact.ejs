@@ -1,27 +1,40 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<%= getLocale() %>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto</title>
+    <title><%= __('contact.title') %></title>
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Contacto | Belleza Móvil">
-    <meta property="og:description" content="Contáctanos para agendar tu cita de peluquería a domicilio. Servicios profesionales de estilismo en la comodidad de tu hogar.">
+    <meta property="og:title" content="<%= __('contact.title') %> | <%= __('home.title') %>">
+    <meta property="og:description" content="<%= __('contact.subtitle') %>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tu-dominio.com/contact">
     <meta property="og:image" content="/img/peluqueria-domicilio.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="Belleza Móvil">
-    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="<%= __('home.title') %>">
+    <meta property="og:locale" content="<%= getLocale() === 'es' ? 'es_ES' : 'en_US' %>">
     
     <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
+<div class="language-selector">
+    <%- include('partials/language-selector') %>
+</div>
+
 <div class="box shadow">
-    <h2 class="text-center">Contáctanos</h2>
+    <h2 class="text-center"><%= __('contact.title') %></h2>
 
     <% if (typeof success !== 'undefined') { %>
         <div class="alert <%= success ? 'alert-success' : 'alert-danger' %>">
@@ -33,15 +46,15 @@
         <div id="error-message" class="alert alert-danger" style="display:none;"></div>
         <input type="hidden" name="source" value="contact-form">
         <div class="field">
-            <label for="name" class="form-label">Nombre</label>
+            <label for="name" class="form-label"><%= __('contact.name') %></label>
             <input type="text" class="form-control" id="name" name="name" required>
         </div>
         <div class="field">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label"><%= __('contact.email') %></label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="field">
-            <label for="message" class="form-label">Mensaje</label>
+            <label for="message" class="form-label"><%= __('contact.message') %></label>
             <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
         </div>
         <% if (recaptchaSiteKey) { %>
@@ -49,7 +62,7 @@
             <div class="g-recaptcha" data-sitekey="<%= recaptchaSiteKey %>"></div>
         </div>
         <% } %>
-        <button type="submit" class="btn btn-primary w-100">Enviar Mensaje</button>
+        <button type="submit" class="btn btn-primary w-100"><%= __('contact.send') %></button>
     </form>
 </div>
 
@@ -59,7 +72,7 @@
         if (recaptchaResponse.length === 0) {
             event.preventDefault();
             var errorMessageDiv = document.getElementById('error-message');
-            errorMessageDiv.innerText = 'Por favor completa el reCAPTCHA.';
+            errorMessageDiv.innerText = '<%= __('contact.form_error') %>';
             errorMessageDiv.style.display = 'block';
         } else {
             document.getElementById('error-message').style.display = 'none';

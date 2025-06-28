@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import bcrypt from 'bcrypt';
+import dayjs from 'dayjs';
 
 const ADMIN_EMAIL = 'admin@peluqueria.com';
 const ADMIN_PASSWORD = 'admin123';
@@ -9,7 +10,10 @@ const ADMIN_PASSWORD = 'admin123';
 export const renderAdminLogin = (req: Request, res: Response) => {
   const error = req.query.error as string;
   const googleClientId = process.env.GOOGLE_CLIENT_ID;
-  res.render('admin/login', { error, googleClientId });
+  res.render('admin/login', { 
+    error: error ? req.__(error) : null, 
+    googleClientId 
+  });
 };
 
 export const handleAdminLogin = async (req: Request, res: Response) => {
@@ -24,7 +28,7 @@ export const handleAdminLogin = async (req: Request, res: Response) => {
     (req.session as any).adminUsername = user.username;
     res.redirect('/admin/dashboard');
   } else {
-    res.redirect('/admin/login?error=Credenciales inválidas');
+    res.redirect('/admin/login?error=admin_login.invalid_credentials');
   }
 };
 
@@ -43,10 +47,19 @@ export const renderAdminPayments = async (req: Request, res: Response) => {
     const db = await open({ filename: './database.sqlite', driver: sqlite3.Database });
     const payments = await db.all('SELECT * FROM payments ORDER BY created_at DESC');
     await db.close();
-    res.render('admin/payments', { payments });
+    
+    // Formatear fechas según el idioma
+    const formattedPayments = payments.map(payment => ({
+      ...payment,
+      created_at: dayjs(payment.created_at).format(
+        req.getLocale() === 'es' ? 'DD/MM/YYYY HH:mm' : 'MM/DD/YYYY h:mm A'
+      )
+    }));
+    
+    res.render('admin/payments', { payments: formattedPayments });
   } catch (error) {
     console.error('💥 ERROR al obtener los pagos:', error);
-    res.status(500).send("Error al cargar la página de pagos.");
+    res.status(500).send(req.__('admin_payments.error_loading'));
   }
 };
 
@@ -67,7 +80,7 @@ export const requireAdminAuth = (req: Request, res: Response, next: NextFunction
       
       if (now > expires) {
         req.session.destroy(() => {
-          res.redirect('/admin/login?error=Sesión expirada. Por favor, inicia sesión nuevamente.');
+          res.redirect('/admin/login?error=admin_login.session_expired');
         });
         return;
       }

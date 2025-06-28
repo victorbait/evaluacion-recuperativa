@@ -33,18 +33,18 @@ const addContact = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const created_at = new Date().toISOString();
         if (!email || !name || !message) {
             res.render('contact', {
-                meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+                meta: { title: req.__('contact.title') + ' | ' + req.__('home.title'), description: req.__('contact.subtitle') },
                 success: false,
-                message: "Todos los campos son obligatorios.",
+                message: req.__('contact.form_error'),
                 recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
             });
             return;
         }
         if (!captcha) {
             res.render('contact', {
-                meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+                meta: { title: req.__('contact.title') + ' | ' + req.__('home.title'), description: req.__('contact.subtitle') },
                 success: false,
-                message: "Por favor completa el recAPTCHA.",
+                message: req.__('contact.form_error'),
                 recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
             });
             return;
@@ -56,9 +56,9 @@ const addContact = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             console.log("Respuesta de reCAPTCHA:", captchaData);
             if (!captchaData.success || (captchaData.score !== undefined && captchaData.score < 0.5)) {
                 res.render('contact', {
-                    meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+                    meta: { title: req.__('contact.title') + ' | ' + req.__('home.title'), description: req.__('contact.subtitle') },
                     success: false,
-                    message: "La verificación de reCAPTCHA ha fallado.",
+                    message: req.__('contact.form_error'),
                     recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
                 });
                 return;
@@ -67,9 +67,9 @@ const addContact = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         catch (captchaError) {
             console.error("Error validando reCAPTCHA:", captchaError);
             res.render('contact', {
-                meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+                meta: { title: req.__('contact.title') + ' | ' + req.__('home.title'), description: req.__('contact.subtitle') },
                 success: false,
-                message: "Error al verificar el captcha.",
+                message: req.__('contact.form_error'),
                 recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
             });
             return;
@@ -89,18 +89,18 @@ const addContact = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         yield ContactsModel_1.default.add({ email, name, comment: message, ip, created_at, country: detectedCountry });
         yield sendEmail(name, email, message, ip, detectedCountry, created_at);
         res.render('contact', {
-            meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+            meta: { title: req.__('contact.title') + ' | ' + req.__('home.title'), description: req.__('contact.subtitle') },
             success: true,
-            message: "Contacto guardado exitosamente.",
+            message: req.__('contact.form_success'),
             recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
         });
     }
     catch (error) {
         console.error("Error en addContact:", error);
         res.render('contact', {
-            meta: { title: 'Contacto | Peluquería a Domicilio', description: 'Ponte en contacto con nosotros para agendar una cita o resolver tus dudas. Estamos para ayudarte.' },
+            meta: { title: req.__('contact.title') + ' | ' + req.__('home.title'), description: req.__('contact.subtitle') },
             success: false,
-            message: "Error al agregar contacto",
+            message: req.__('contact.form_error'),
             recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY
         });
     }
@@ -113,7 +113,7 @@ const getContacts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (error) {
         console.error("Error en getContacts:", error);
-        res.status(500).json({ error: "Error al obtener contactos" });
+        res.status(500).json({ error: req.__('admin_contacts.error_loading') });
     }
 });
 exports.getContacts = getContacts;
@@ -124,7 +124,7 @@ const indexContacts = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     catch (error) {
         console.error("Error en indexContacts:", error);
-        res.status(500).json({ error: "Error al renderizar contactos" });
+        res.status(500).json({ error: req.__('admin_contacts.error_loading') });
     }
 });
 exports.indexContacts = indexContacts;

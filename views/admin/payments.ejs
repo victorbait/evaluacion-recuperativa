@@ -1,35 +1,47 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<%= getLocale() %>">
 <head>
     <meta charset="UTF-8">
-    <title>Historial de Pagos | Panel Admin</title>
+    <title><%= __('admin_payments.title') %> | <%= __('admin.dashboard') %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/admin.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
 </head>
 <body class="admin-body">
 
+    <div class="language-selector">
+        <%- include('../partials/language-selector') %>
+    </div>
+
     <header class="admin-header">
-        <a href="/admin/dashboard" class="logo">Panel Admin</a>
+        <a href="/admin/dashboard" class="logo"><%= __('admin.dashboard') %></a>
         <nav class="admin-nav">
-            <a href="/admin/dashboard">Dashboard</a>
-            <a href="/admin/payments" class="active">Ver Pagos</a>
-            <a href="/admin/contacts">Ver Contactos</a>
-            <a href="/admin/logout">Cerrar Sesión</a>
+            <a href="/admin/dashboard"><%= __('admin.dashboard') %></a>
+            <a href="/admin/payments" class="active"><%= __('admin_payments.title') %></a>
+            <a href="/admin/contacts"><%= __('admin.contacts') %></a>
+            <a href="/admin/logout"><%= __('navigation.logout') %></a>
         </nav>
     </header>
 
     <main class="admin-main">
         <div class="admin-card">
-            <h1>Historial de Pagos</h1>
+            <h1><%= __('admin_payments.title') %></h1>
             <table class="admin-table">
                 <thead>
                     <tr>
-                        <th>ID Transacción</th>
-                        <th>Monto</th>
-                        <th>Moneda</th>
-                        <th>Email</th>
-                        <th>Estado</th>
-                        <th>Fecha</th>
+                        <th><%= __('admin_payments.payment_id') %></th>
+                        <th><%= __('admin_payments.amount') %></th>
+                        <th><%= __('payment.currency') %></th>
+                        <th><%= __('admin_payments.customer_email') %></th>
+                        <th><%= __('admin_payments.status') %></th>
+                        <th><%= __('admin_payments.created_at') %></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,19 +54,20 @@
                                 <td><%= payment.email %></td>
                                 <td>
                                     <% if (payment.status) { %>
-                                        <span style="color: <%= payment.status.toLowerCase() === 'approved' ? 'green' : 'red' %>; font-weight: bold;">
-                                            <%= payment.status %>
+                                        <% const statusKey = payment.status.toLowerCase(); %>
+                                        <span style="color: <%= statusKey === 'approved' ? 'green' : 'red' %>; font-weight: bold;">
+                                            <%= statusKey === 'approved' ? __('status.completed') : __('status.pending') %>
                                         </span>
                                     <% } else { %>
                                         <span>N/A</span>
                                     <% } %>
                                 </td>
-                                <td><%= new Date(payment.created_at).toLocaleString() %></td>
+                                <td><%= payment.created_at %></td>
                             </tr>
                         <% }) %>
                     <% } else { %>
                         <tr>
-                            <td colspan="6" style="text-align: center;">No hay pagos registrados.</td>
+                            <td colspan="6" style="text-align: center;"><%= __('admin_payments.no_payments') %></td>
                         </tr>
                     <% } %>
                 </tbody>

@@ -1,0 +1,139 @@
+{
+  "common": {
+    "language": "Idioma",
+    "spanish": "Español",
+    "english": "Inglés",
+    "select_language": "Seleccionar idioma"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "contact": "Contacto",
+    "payments": "Pagos",
+    "admin": "Administración",
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión"
+  },
+  "home": {
+    "title": "Peluquería a Domicilio",
+    "subtitle": "Servicios profesionales de belleza en la comodidad de tu hogar",
+    "services": "Nuestros Servicios",
+    "booking": "Reservar Cita",
+    "about": "Sobre Nosotros",
+    "contact_us": "Contáctanos",
+    "welcome_message": "Bienvenido a nuestra peluquería a domicilio",
+    "professional_service": "Servicio profesional en la comodidad de tu hogar",
+    "book_now": "Reservar Ahora",
+    "learn_more": "Conoce Más"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Ponte en contacto con nosotros",
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "message": "Mensaje",
+    "send": "Enviar Mensaje",
+    "contact_info": "Información de Contacto",
+    "address": "Dirección",
+    "phone_number": "Número de Teléfono",
+    "email_address": "Dirección de Correo",
+    "business_hours": "Horarios de Atención",
+    "monday_friday": "Lunes a Viernes",
+    "saturday": "Sábado",
+    "sunday": "Domingo",
+    "form_success": "Mensaje enviado exitosamente",
+    "form_error": "Error al enviar el mensaje"
+  },
+  "payment": {
+    "title": "Pago",
+    "amount": "Monto",
+    "currency": "Moneda",
+    "payment_method": "Método de Pago",
+    "card_number": "Número de Tarjeta",
+    "expiry_date": "Fecha de Vencimiento",
+    "cvv": "CVV",
+    "cardholder_name": "Nombre del Titular",
+    "pay": "Pagar",
+    "payment_success": "Pago realizado exitosamente",
+    "payment_error": "Error en el pago",
+    "processing": "Procesando pago...",
+    "total": "Total",
+    "service": "Servicio",
+    "date": "Fecha",
+    "time": "Hora"
+  },
+  "admin": {
+    "dashboard": "Panel de Administración",
+    "payments": "Pagos",
+    "contacts": "Contactos",
+    "users": "Usuarios",
+    "settings": "Configuración",
+    "welcome": "Bienvenido",
+    "total_payments": "Total de Pagos",
+    "total_contacts": "Total de Contactos",
+    "recent_activity": "Actividad Reciente",
+    "view_all": "Ver Todos"
+  },
+  "admin_login": {
+    "title": "Iniciar Sesión - Administración",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "login": "Iniciar Sesión",
+    "invalid_credentials": "Credenciales inválidas",
+    "session_expired": "Sesión expirada. Por favor, inicia sesión nuevamente.",
+    "or_login_with": "O inicia sesión con"
+  },
+  "admin_payments": {
+    "title": "Gestión de Pagos",
+    "payment_id": "ID de Pago",
+    "customer_email": "Correo del Cliente",
+    "amount": "Monto",
+    "status": "Estado",
+    "created_at": "Fecha de Creación",
+    "actions": "Acciones",
+    "view": "Ver",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "no_payments": "No hay pagos registrados",
+    "loading_payments": "Cargando pagos...",
+    "error_loading": "Error al cargar la página de pagos"
+  },
+  "admin_contacts": {
+    "title": "Gestión de Contactos",
+    "contact_id": "ID de Contacto",
+    "name": "Nombre",
+    "email": "Correo",
+    "phone": "Teléfono",
+    "message": "Mensaje",
+    "created_at": "Fecha de Creación",
+    "actions": "Acciones",
+    "view": "Ver",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "no_contacts": "No hay contactos registrados",
+    "loading_contacts": "Cargando contactos...",
+    "error_loading": "Error al cargar la página de contactos"
+  },
+  "status": {
+    "pending": "Pendiente",
+    "completed": "Completado",
+    "cancelled": "Cancelado",
+    "failed": "Fallido"
+  },
+  "date_format": {
+    "short": "DD/MM/YYYY",
+    "long": "DD/MM/YYYY HH:mm",
+    "time": "HH:mm"
+  },
+  "errors": {
+    "page_not_found": "Página no encontrada",
+    "server_error": "Error del servidor",
+    "unauthorized": "No autorizado",
+    "forbidden": "Acceso prohibido"
+  },
+  "footer": {
+    "copyright": "© 2024 Peluquería a Domicilio. Todos los derechos reservados.",
+    "privacy_policy": "Política de Privacidad",
+    "terms_of_service": "Términos de Servicio"
+  }
+} 
